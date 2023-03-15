@@ -17,11 +17,31 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+
+// app.use((req,res,next)=>{
+//     req.on('data',(chank)=>{
+//         console.log(chank.toString());
+
+//     });
+//     req.on('end',()=>{
+//         next();
+//     })
+// });
+
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Hello World",
   });
 });
+
+app.post('/articles', (req,res) =>{
+    res.status(200).json({
+        message: req.body.message
+      });
+
+});
+
 
 app.use((req, res, next) => {
   const error = new Error('Not Found');
@@ -33,7 +53,7 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      massage: error.massage,
+      massage: error.message,
     },
   });
 });
